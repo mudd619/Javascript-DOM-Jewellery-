@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cart</title>
+        <style>
+             h1{
+                text-align: center;
+            }
+            #one{
+                display : grid;
+                grid-template-columns: repeat(3,30%);
+                grid-gap: 5%;
+                margin-left:6%;
+                text-align: center;
+            }
+            img{
+                width : 50%;
+                height:15vw;
+            }
+            input{
+                
+                margin-top: 0%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Cart</h1>
+        <button onclick= "newPage()" style = "margin-top: 4%;margin-left: 49%;">Checkout</button><br>
+        <input onclick="discount()" type="submit">
+        <input id="take" type="text" placeholder="Enter coupon"/>
+        <div id="two"></div>
+        <div id="one"></div>
+    </body>
+</html>
+
+<script>
+    var me = JSON.parse(localStorage.getItem("cart"));
+    let div = document.getElementById("one");
+    let divPrice = document.getElementById("two");
+    let res = 0;
+    let div_res = document.createElement("div");
+
+    function cart(){
+        for(let i=0 ; i<me.length ; i++){
+            let divTwo = document.createElement("div");
+
+            let image = document.createElement("img");
+            image.setAttribute("id",`${i}`);
+            image.src = me[i].image;
+            let name = document.createElement("p");
+            name.textContent = me[i].name;
+            let price = document.createElement("p");
+            price.textContent = me[i].price;
+            let button = document.createElement("button");
+            button.textContent = "Add to cart";
+            button.setAttribute("onclick",`cart(${i})`);
+
+            divTwo.append(image, name , price,button);
+            div.append(divTwo);
+
+            res = res + me[i].price;
+
+        }
+
+        localStorage.setItem("total",JSON.stringify(res))
+        div_res.innerHTML = `${res}`;
+        var last = document.createElement("div");
+        var div_last = document.createElement("div");
+        last.innerHTML= "Total price";
+        last.style.marginTop = "2%";
+        div_last.append(last,div_res)
+        divPrice.append(div_last);
+        
+    }
+    cart();
+
+    function discount(){
+        let inp = document.getElementById("take").value;
+        let dem = div_res.textContent;
+        Number(dem);
+        let tem;
+        
+        if(inp == "masai30"){
+            alert("code applied")
+           tem = dem*0.3;
+           tem = dem - tem;
+           localStorage.setItem("total",JSON.stringify(tem))
+           div_res.textContent = tem;
+        }
+        else {
+            alert("invalid coupon")
+        }
+    }
+
+    function newPage(){
+        window.location.href = "checkout.html";
+    }
+</script>

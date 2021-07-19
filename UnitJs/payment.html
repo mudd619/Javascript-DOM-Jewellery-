@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>payment</title>
+    </head>
+    <body>
+        <h1>payment page</h1>
+        <div id="one"></div>
+        <input type="text" placeholder="enter debit card Name"><br>
+        <input type="number" placeholder="enter debit card Number">
+        <button onclick="place()">Place order</button>
+    </body>
+</html>
+
+<script>
+    function place(){
+        let me = JSON.parse(localStorage.getItem("total"))
+        let you = JSON.parse(localStorage.getItem("address1"))
+        alert(`Your order of ${me} is placed and will be delivered at ${you}`)
+        alert("Thanks for shopping")
+    }
+</script>

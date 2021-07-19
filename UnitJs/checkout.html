@@ -1,0 +1,30 @@
+<!DOCTYPE html>>
+<html>
+    <head>
+        <title>checkout</title>
+        <style>
+             h1{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>checkout</h1>
+        <input id="one" type="text" placeholder="Add address1"><br>
+        <input id="two" type="text" placeholder="Add address2"><br>
+        <button onclick="payment()">Go to payment</button>
+    </body>
+</html>
+
+<script>
+
+    function payment(){
+        let one = document.getElementById("one").value;
+        let two = document.getElementById("two").value;
+
+        localStorage.setItem("address2",JSON.stringify(one))
+        localStorage.setItem("address2",JSON.stringify(two));
+
+        window.location.href="payment.html";
+    }
+</script>

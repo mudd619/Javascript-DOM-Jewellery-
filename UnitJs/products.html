@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>products</title>
+        <style>
+            h1{
+                text-align: center;
+            }
+            #one{
+                display : grid;
+                grid-template-columns: repeat(3,30%);
+                grid-gap: 5%;
+                margin-left:6%;
+                text-align: center;
+            }
+            img{
+                width : 50%;
+                height:15vw;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Available products</h1>
+        <button onclick="sortLH()">sort low to high</button>
+        <button onclick="sortHL()">sort high to low</button> 
+        <button onclick="go()" style = "float: right;width:10%">Cart</button>
+        <div id="one"></div>
+    </body>
+</html>
+
+<script>
+    const arr = [
+    {
+        image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoQnOWNgoW_hoKS8HkT6kU_y8ZThinX87Q0A&usqp=CAU",
+        name : "Nike Airmax",
+        brand : "nike",
+        id: "shoe",
+        price : 6999
+    },
+    {
+        image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbmc4Xhj_xKJRE3vVC-MLDKx0bvnITQ65xSQ&usqp=CAU",
+        name : "Nike zoom",
+        id :"shoe",
+        brand : "nike",
+        price: 5999
+    },
+    {
+        image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhPb6EgFToGVs4zoMC6SO9NZj12C8z97l8aw&usqp=CAU",
+        name : "Adidas Alphaedge",
+        price: 3999,
+        id:"shoe",
+        brand : "adidas",
+    },
+    {
+        image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS3vg2tWM9ls9hFLRfZO0IcY8vnkkExwcqkw&usqp=CAU",
+        name : "Adidas Ultraboost",
+        price : 15999,
+        id :"shoe",
+        brand : "adidas"
+    }
+    ]
+
+    localStorage.setItem("product", JSON.stringify(arr));
+
+    let arr1 = JSON.parse(localStorage.getItem("product"));
+
+    let div = document.getElementById("one");
+
+    function product(me){
+        
+        for(let i=0 ; i<me.length ; i++){
+            let divTwo = document.createElement("div");
+
+            let image = document.createElement("img");
+            image.setAttribute("id",`${i}`);
+            image.setAttribute("onmouseover",`hover(${i})`);
+            image.src = me[i].image;
+            let name = document.createElement("p");
+            name.textContent = me[i].name;
+            let price = document.createElement("p");
+            price.textContent = me[i].price;
+            let button = document.createElement("button");
+            button.textContent = "Add to cart";
+            button.setAttribute("onclick",`cart(${i})`);
+
+            divTwo.append(image, name , price,button);
+            div.append(divTwo)
+
+        }
+    }
+
+    function hover(i){
+        let image = document.getElementById(i);
+        image.setAttribute("src","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqX9q-OAdEEkzSq2bNiyjZqwt8MXQQ_FLUIQ&usqp=CAU")
+    }
+
+    product(arr1);
+
+    function sortLH(){
+        div.innerHTML = "";
+        let inp = arr1;;
+        inp.sort(function(a,b){
+           return a.price - b.price;
+        });
+
+        product(inp)
+        
+    }
+
+    function sortHL(){
+        div.innerHTML = "";
+        let inp = arr1;;
+        inp.sort(function(a,b){
+           return b.price - a.price;
+        });
+
+        product(inp)
+        
+    }
+
+    
+
+    function cart(i){
+        
+        let ar;
+        alert("item added")
+        ar = localStorage.getItem('cart')
+    
+        if(ar == null){
+           ar =[];
+        }
+        else {
+           ar = JSON.parse(localStorage.getItem('cart'))
+        }
+        ar.push(arr1[i]);
+        localStorage.setItem("cart",JSON.stringify(ar))
+        console.log(ar);
+    }
+
+    function go(){
+            window.location.href = "cart.html";
+    }
+
+</script>
